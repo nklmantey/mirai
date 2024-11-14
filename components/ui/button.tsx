@@ -1,15 +1,17 @@
 import styled from 'styled-components/native'
 import { IconContext } from 'phosphor-react-native'
-import { ActivityIndicator } from 'react-native'
+import { ActivityIndicator, TouchableOpacityProps } from 'react-native'
+import * as Haptics from 'expo-haptics'
 
-import { GeistMedium } from '@/components/ui/text'
+import { AirbnbCerealMedium } from '@/components/ui/text'
 
-interface ButtonProps {
+type ButtonProps = {
   title: string
   onPress: () => void
   variant?: 'primary' | 'outlined' | 'danger'
   icon?: React.ReactNode
   isLoading?: boolean
+  style?: TouchableOpacityProps['style']
 }
 
 const backgroundVariants = {
@@ -30,13 +32,18 @@ export function Button({
   variant = 'primary',
   icon,
   isLoading = false,
+  style,
 }: ButtonProps) {
   return (
     <PrimaryButton
       activeOpacity={0.8}
-      onPress={onPress}
+      onPress={() => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
+        onPress()
+      }}
       disabled={isLoading}
       variant={variant}
+      style={style}
     >
       <ButtonText variant={variant}>
         {title}
@@ -73,6 +80,6 @@ const PrimaryButton = styled.TouchableOpacity<{ variant: ButtonProps['variant'] 
   opacity: ${({ disabled }) => disabled ? 0.5 : 1};
 `
 
-const ButtonText = styled(GeistMedium) <{ variant: ButtonProps['variant'] }>`
+const ButtonText = styled(AirbnbCerealMedium) <{ variant: ButtonProps['variant'] }>`
   color: ${({ variant }) => variant === 'danger' ? 'crimson' : '#0B061B'};
 `

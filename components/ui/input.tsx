@@ -2,8 +2,9 @@ import { useState } from 'react'
 
 import { EyeClosed, Eye, IconContext } from 'phosphor-react-native'
 import styled from 'styled-components/native'
+import { AirbnbCerealRegular } from './text'
 
-interface InputProps {
+type InputProps = {
   placeholder: string
   value: string
   onChangeText: (text: string) => void
@@ -23,52 +24,57 @@ export function Input({
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   return (
-    <PrimaryInputContainer>
-      <PrimaryInput
-        placeholder={placeholder}
-        value={value}
-        onChangeText={onChangeText}
-        autoCapitalize='none'
-        autoCorrect={false}
-        secureTextEntry={isPasswordInput ? isPasswordVisible : false}
-        style={{ width: (isPasswordInput || icon) ? '85%' : '100%' }}
-        isInvalid={!!error}
-      />
-      {isPasswordInput && (
-        <IconContext.Provider
-          value={{
-            weight: 'duotone',
-            size: 24,
-            color: error ? 'crimson' : '#0B061B',
-            duotoneColor: error ? 'crimson' : '#0B061B',
-          }}
-        >
-          <IconContainerPressable
-            activeOpacity={0.8}
-            onPress={() => setIsPasswordVisible(!isPasswordVisible)}
-            style={{ borderColor: error ? 'crimson' : '#D4D4D8' }}
+    <>
+      <PrimaryInputContainer>
+        <PrimaryInput
+          placeholder={placeholder}
+          value={value}
+          onChangeText={onChangeText}
+          autoCapitalize='none'
+          autoCorrect={false}
+          secureTextEntry={isPasswordInput && !isPasswordVisible}
+          style={{ width: (isPasswordInput || icon) ? '85%' : '100%' }}
+          isInvalid={!!error}
+        />
+        {isPasswordInput && (
+          <IconContext.Provider
+            value={{
+              weight: 'duotone',
+              size: 24,
+              color: error ? 'crimson' : '#0B061B',
+              duotoneColor: error ? 'crimson' : '#0B061B',
+            }}
           >
-            {isPasswordVisible ? <Eye /> : <EyeClosed />}
-          </IconContainerPressable>
-        </IconContext.Provider>
-      )}
-      {icon && (
-        <IconContext.Provider
-          value={{
-            weight: 'duotone',
-            size: 24,
-            color: error ? 'crimson' : '#0B061B',
-            duotoneColor: error ? 'crimson' : '#0B061B',
-          }}
-        >
-          <IconContainer
-            style={{ borderColor: error ? 'crimson' : '#D4D4D8' }}
+            <IconContainerPressable
+              activeOpacity={0.8}
+              onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+              style={{ borderColor: error ? 'crimson' : '#D4D4D8' }}
+            >
+              {isPasswordVisible ? <EyeClosed /> : <Eye />}
+            </IconContainerPressable>
+          </IconContext.Provider>
+        )}
+        {icon && (
+          <IconContext.Provider
+            value={{
+              weight: 'duotone',
+              size: 24,
+              color: error ? 'crimson' : '#0B061B',
+              duotoneColor: error ? 'crimson' : '#0B061B',
+            }}
           >
-            {icon}
-          </IconContainer>
-        </IconContext.Provider>
+            <IconContainer
+              style={{ borderColor: error ? 'crimson' : '#D4D4D8' }}
+            >
+              {icon}
+            </IconContainer>
+          </IconContext.Provider>
+        )}
+      </PrimaryInputContainer>
+      {error && (
+        <ErrorText>{error}</ErrorText>
       )}
-    </PrimaryInputContainer>
+    </>
   )
 }
 
@@ -84,7 +90,7 @@ const PrimaryInput = styled.TextInput<{ isInvalid: boolean }>`
   border-radius: 8px;
   border: 1px solid ${({ isInvalid }) => isInvalid ? 'crimson' : '#D4D4D8'};
   font-size: 16px;
-  font-family: GeistMedium;
+  font-family: AirbnbCerealMedium;
 `
 
 const IconContainerPressable = styled.TouchableOpacity`
@@ -109,4 +115,10 @@ const IconContainer = styled.View`
   justify-content: center;
   border-radius: 8px;
   border: 1px solid #D4D4D8;
+`
+
+const ErrorText = styled(AirbnbCerealRegular)`
+  color: crimson;
+  font-size: 14px;
+  margin-top: -8px;
 `
