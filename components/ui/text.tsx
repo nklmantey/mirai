@@ -11,6 +11,7 @@ export const GeistMedium = styled.Text`
   font-size: 16px;
   font-family: GeistMedium;
   color: #0B061B;
+  letter-spacing: -0.28px;
 `
 
 export const GeistRegular = styled.Text`
