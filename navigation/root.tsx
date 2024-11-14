@@ -1,6 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { storage } from '@/storage';
 
 import AppNavigation from './app';
 import AuthNavigation from './auth';
@@ -8,7 +7,7 @@ import AuthNavigation from './auth';
 const Stack = createNativeStackNavigator();
 
 export default function RootNavigation() {
-  const isAuthenticated = storage.getBoolean('isAuthenticated');
+  const isAuthenticated = false
 
   return (
     <NavigationContainer>

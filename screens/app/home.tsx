@@ -1,10 +1,18 @@
-import { View, Text } from 'react-native'
 import React from 'react'
+import Container from '@/components/global/container'
+import { GeistBold } from '@/components/ui/text'
+import { Button } from '@/components/ui/button'
 
 export default function HomeScreen() {
   return (
-    <View>
-      <Text>HomeScreen</Text>
-    </View>
+    <Container>
+      <GeistBold>home</GeistBold>
+
+      <Button
+        title='login'
+        onPress={() => {
+        }}
+      />
+    </Container>
   )
 }

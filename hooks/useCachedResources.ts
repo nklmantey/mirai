@@ -14,8 +14,6 @@ export default function useCachedResources() {
           AirbnbCerealBlack: require('../assets/fonts/AirbnbCereal-Black.otf'),
           AirbnbCerealMedium: require('../assets/fonts/AirbnbCereal-Medium.otf'),
           AirbnbCerealRegular: require('../assets/fonts/AirbnbCereal-Regular.otf'),
-          GeistBlack: require('../assets/fonts/Geist-Black.ttf'),
-          GeistMedium: require('../assets/fonts/Geist-SemiBold.ttf'),
           GeistRegular: require('../assets/fonts/Geist-Regular.ttf'),
         });
       } catch (e) {
