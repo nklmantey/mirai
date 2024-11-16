@@ -1,21 +1,17 @@
 import Container from '@/components/global/container'
 import { Header } from '@/components/global/header'
-import { Button } from '@/components/ui/button'
-import {
-  NumberCircleOne,
-  NumberCircleTwo,
-  NumberCircleThree,
-} from 'phosphor-react-native'
+
 import { useState } from 'react'
 import styled from 'styled-components/native'
 import { StyleSheet } from 'react-native'
 import Animated, {
   useAnimatedStyle,
   withSpring,
-  FadeIn,
-  FadeOut,
-  LinearTransition,
 } from 'react-native-reanimated'
+import {
+  FormStepOne,
+  FormStepTwo
+} from './components/forms'
 
 type StepItemProps = {
   isActive: boolean
@@ -31,7 +27,7 @@ function StepItem({ isActive }: StepItemProps) {
   }))
 
   return (
-    <AnimatedStepItem style={[styles.stepItem, animatedStyle]} />
+    <Animated.View style={[styles.stepItem, animatedStyle]} />
   )
 }
 
@@ -46,10 +42,9 @@ export default function SignupScreen() {
     if (step > 1) setStep(step - 1)
   }
 
-  const stepIcon = {
-    1: <NumberCircleOne />,
-    2: <NumberCircleTwo />,
-    3: <NumberCircleThree />,
+  const stepForms = {
+    1: <FormStepOne handleContinue={handleContinue} />,
+    2: <FormStepTwo handleContinue={handleContinue} handleBack={handleBack} />,
   }
 
   return (
@@ -71,30 +66,9 @@ export default function SignupScreen() {
         />
       </StepContainer>
 
-      <InputsContainer></InputsContainer>
-
-      <AnimatedButtonContainer>
-        {step > 1 && (
-          <Animated.View
-            entering={FadeIn.duration(200)}
-            exiting={FadeOut.duration(200)}
-            layout={LinearTransition.springify()}
-          >
-            <Button
-              variant='outlined'
-              title='go back'
-              onPress={handleBack}
-              style={{ flex: 1 }}
-            />
-          </Animated.View>
-        )}
-        <Button
-          title='continue'
-          onPress={handleContinue}
-          icon={stepIcon[step as keyof typeof stepIcon]}
-          style={{ flex: 1 }}
-        />
-      </AnimatedButtonContainer>
+      <FormContainer>
+        {stepForms[step as keyof typeof stepForms]}
+      </FormContainer>
     </Container>
   )
 }
@@ -114,14 +88,9 @@ const StepContainer = styled.View`
   margin: 20px 0;
 `
 
-const AnimatedStepItem = styled(Animated.View)``
 
-const InputsContainer = styled.View`
-  gap: 16px;
-`
-
-const AnimatedButtonContainer = styled(Animated.View)`
-  flex-direction: row;
-  gap: 8px;
-  margin-top: auto;
+const FormContainer = styled.View`
+  flex: 1;
+  align-items: center; 
+  justify-content: center;
 `
